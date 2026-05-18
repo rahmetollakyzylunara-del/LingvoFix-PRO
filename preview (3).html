@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang='ru'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>ЛингвоФикс PRO</title>
+<style>
+body{font-family:Arial;background:linear-gradient(135deg,#08142c,#1e2d4f);color:white;margin:0}
+header{background:#3b2cff;padding:20px;text-align:center;font-size:42px;font-weight:bold}
+nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:20px}
+button{padding:12px 18px;border:none;border-radius:12px;font-weight:bold;cursor:pointer}
+.section{display:none;background:#24324a;width:85%;margin:20px auto;padding:25px;border-radius:20px}
+.active{display:block}
+.question{background:#3a475f;padding:15px;border-radius:15px;margin-bottom:20px}
+input{width:90%;padding:10px;border-radius:8px;border:none;margin-top:10px}
+.quiz-option{display:block;margin:8px 0;padding:10px;background:#5567ff;border-radius:10px;cursor:pointer}
+.result{font-weight:bold;margin-top:10px}
+footer{text-align:center;padding:25px}
+</style>
+</head>
+<body>
+
+<header>ЛИНГВОФИКС PRO</header>
+
+<nav>
+<button onclick="showSection('rod')">Род</button>
+<button onclick="showSection('predlog')">Предлоги</button>
+<button onclick="showSection('syntax')">Порядок слов</button>
+<button onclick="showSection('translate')">Перевод</button>
+<button onclick="showSection('game')">Игра</button>
+</nav>
+
+<div id='rod' class='section active'><h2>Род и согласование</h2><div id='rodQuestions'></div></div>
+<div id='predlog' class='section'><h2>Предлоги</h2><div id='predlogQuestions'></div></div>
+<div id='syntax' class='section'><h2>Порядок слов</h2><div id='syntaxQuestions'></div></div>
+<div id='translate' class='section'><h2>Перевод</h2><div id='translateQuestions'></div></div>
+<div id='game' class='section'><h2>Лингво-Рывок</h2><div id='gameQuestions'></div><h3 id='score'>Очки: 0</h3></div>
+
+<footer>DRK.XB | ЛингвоФикс PRO © 2026</footer>
+
+<script>
+function showSection(id){
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+function createQuestions(containerId,questions){
+const container=document.getElementById(containerId);
+questions.forEach((q,index)=>{
+const div=document.createElement('div');
+div.className='question';
+div.innerHTML=`
+<p><b>${index+1}. ${q.question}</b></p>
+<input type='text' id='${containerId}_${index}'>
+<button onclick="checkAnswer('${containerId}_${index}','${q.answer}','${containerId}_r${index}')">Проверить</button>
+<div class='result' id='${containerId}_r${index}'></div>`;
+container.appendChild(div);
+});
+}
+
+function checkAnswer(id,correct,resId){
+const value=document.getElementById(id).value.trim().toLowerCase();
+const result=document.getElementById(resId);
+if(value===correct.toLowerCase()){
+result.innerHTML='✅ Верно!';
+result.style.color='lightgreen';
+}else{
+result.innerHTML='❌ Правильный ответ: '+correct;
+result.style.color='salmon';
+}
+}
+
+const rodQuestions=[
+{question:"Исправьте: Мой сестра пришёл домой.",answer:"Моя сестра пришла домой"},
+{question:"Исправьте: Вкусный яблоко лежит на столе.",answer:"Вкусное яблоко лежит на столе"},
+{question:"Исправьте: Мой фамилия известна.",answer:"Моя фамилия известна"},
+{question:"Исправьте: Горячая кофе был вкусный.",answer:"Горячий кофе был вкусный"},
+{question:"Исправьте: Новый шампунь закончилась.",answer:"Новый шампунь закончился"},
+{question:"Исправьте: Белая тюль висит.",answer:"Белый тюль висит"},
+{question:"Исправьте: Большой проблема появилась.",answer:"Большая проблема появилась"},
+{question:"Исправьте: Эта метро старый.",answer:"Это метро старое"},
+{question:"Исправьте: Моя папа работает.",answer:"Мой папа работает"},
+{question:"Исправьте: Красивый фамилия.",answer:"Красивая фамилия"}
+];
+
+const predlogQuestions=[
+{question:"Вставьте предлог: Я пошёл ___ школу.",answer:"в"},
+{question:"Мы вернулись ___ города.",answer:"из"},
+{question:"Книга лежит ___ столе.",answer:"на"},
+{question:"Мы готовимся ___ экзамену.",answer:"к"},
+{question:"Папа пришёл ___ работы.",answer:"с"},
+{question:"Дети пошли ___ библиотеку.",answer:"в"},
+{question:"Мы были ___ соревнованиях.",answer:"на"},
+{question:"Она сидит ___ окна.",answer:"у"},
+{question:"Я говорю ___ русском языке.",answer:"на"},
+{question:"Ученики вошли ___ кабинет.",answer:"в"}
+];
+
+const syntaxQuestions=[
+{question:"Перестройте: Я книгу вчера читал.",answer:"Я вчера читал книгу"},
+{question:"Перестройте: Мы домой поздно вернулись.",answer:"Мы поздно вернулись домой"},
+{question:"Перестройте: Она музыку вечером слушала.",answer:"Она слушала музыку вечером"},
+{question:"Перестройте: Мама вкусный ужин приготовила.",answer:"Мама приготовила вкусный ужин"},
+{question:"Перестройте: Они футбол вчера играли.",answer:"Они вчера играли в футбол"},
+{question:"Перестройте: Я русский язык долго учил.",answer:"Я долго учил русский язык"},
+{question:"Перестройте: Мы интересную тему обсуждали.",answer:"Мы обсуждали интересную тему"},
+{question:"Перестройте: Он домашнее задание быстро сделал.",answer:"Он быстро сделал домашнее задание"},
+{question:"Перестройте: Я фильм новый посмотрел.",answer:"Я посмотрел новый фильм"},
+{question:"Перестройте: Ученики в библиотеку сегодня пошли.",answer:"Сегодня ученики пошли в библиотеку"}
+];
+
+const translateQuestions=[
+{question:"Переведите: Мен мектепке бардым.",answer:"Я пошёл в школу"},
+{question:"Переведите: Мен ауылда тұрамын.",answer:"Я живу в деревне"},
+{question:"Переведите: Әкем зауытта жұмыс істейді.",answer:"Мой отец работает на заводе"},
+{question:"Переведите: Маған бұл қала ұнайды.",answer:"Мне нравится этот город"},
+{question:"Переведите: Біз киноға бардық.",answer:"Мы пошли в кино"},
+{question:"Переведите: Ол сабақ оқып отыр.",answer:"Он делает уроки"},
+{question:"Переведите: Мен кітап оқып отырмын.",answer:"Я читаю книгу"},
+{question:"Переведите: Мен орыс тілін үйреніп жүрмін.",answer:"Я изучаю русский язык"},
+{question:"Переведите: Бүгін ауа райы жақсы.",answer:"Сегодня хорошая погода"},
+{question:"Переведите: Менің досым спортпен айналысады.",answer:"Мой друг занимается спортом"}
+];
+
+createQuestions('rodQuestions',rodQuestions);
+createQuestions('predlogQuestions',predlogQuestions);
+createQuestions('syntaxQuestions',syntaxQuestions);
+createQuestions('translateQuestions',translateQuestions);
+
+let score=0;
+
+const gameData=[
+{q:"Выберите правильный вариант",options:["Мой сестра читает","Моя сестра читает","Моя сестра читать"],correct:1},
+{q:"Выберите правильный вариант",options:["Я пошёл школа","Я пошёл в школу","Я пошёл на школа"],correct:1},
+{q:"Выберите правильный вариант",options:["Белая тюль","Белый тюль","Белое тюль"],correct:1},
+{q:"Выберите правильный вариант",options:["Я вчера книгу читал","Я вчера читал книгу","Я книгу вчера читал"],correct:1},
+{q:"Выберите правильный вариант",options:["Открой свет","Включи свет","Подними свет"],correct:1},
+{q:"Выберите правильный вариант",options:["Это вкусное кофе","Этот вкусный кофе","Эта вкусная кофе"],correct:1},
+{q:"Выберите правильный вариант",options:["Мы были соревнованиях","Мы были на соревнованиях","Мы были к соревнованиям"],correct:1},
+{q:"Выберите правильный вариант",options:["Моя фамилия","Мой фамилия","Моё фамилия"],correct:0},
+{q:"Выберите правильный вариант",options:["Он быстро сделал уроки","Он уроки быстро сделал","Он быстро уроки"],correct:0},
+{q:"Выберите правильный вариант",options:["Мне нравится книга","Меня нравится книга","Я нравится книга"],correct:0}
+];
+
+const gameContainer=document.getElementById('gameQuestions');
+
+gameData.forEach((item,index)=>{
+const div=document.createElement('div');
+div.className='question';
+let html=`<p><b>${index+1}. ${item.q}</b></p>`;
+item.options.forEach((opt,i)=>{
+html+=`<div class='quiz-option' onclick='checkGame(${i},${item.correct},this)'>${opt}</div>`;
+});
+div.innerHTML=html;
+gameContainer.appendChild(div);
+});
+
+function checkGame(choice,correct,el){
+if(choice===correct){
+score++;
+document.getElementById('score').innerText='Очки: '+score;
+el.style.background='green';
+}else{
+el.style.background='red';
+}
+}
+</script>
+
+</body>
+</html>
