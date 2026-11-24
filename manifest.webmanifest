@@ -1,0 +1,25 @@
+{
+  "id": "./",
+  "name": "ЛингвоФикс — письменная речь",
+  "short_name": "ЛингвоФикс",
+  "description": "Тренажёр для коррекции казахско-русской интерференции в письменной речи.",
+  "lang": "ru",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#061426",
+  "theme_color": "#071a31",
+  "categories": [
+    "education"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
